@@ -117,14 +117,14 @@ export const getTransactionById = async (req, res) => {
     const result = await pool.query(
       `
       SELECT t.*, 
-      c.name as category_name
-      c.icon as category_icon
+      c.name as category_name,
+      c.icon as category_icon,
       c.color as category_color
-      
       FROM transactions t
       LEFT JOIN categories c ON t.category_id = c.id
       WHERE t.id = $1 AND t.user_id = $2 
-      `[(id, req.userId)],
+      `,
+      [id, req.userId],
     );
 
     if (result.rows.length === 0) {
@@ -192,7 +192,9 @@ export const deleteTransaction = async (req, res) => {
       `
       DELETE FROM transactions
       WHERE id = $1 AND user_id = $2
-      RETURNING *`[(id, req.userId)],
+      RETURNING *
+      `,
+      [id, req.userId],
     );
 
     if (result.rows.length === 0) {
@@ -224,7 +226,8 @@ export const analyzeTransactions = async (req, res) => {
       LEFT JOIN categories c ON c.id = t.category_id
       WHERE t.user_id = $1 AND t.id = ANY($2::int[])
       ORDER BY t.transaction_date DESC
-      `[(req.userId, ids)],
+      `,
+      [req.userId, ids],
     );
 
     if (result.rows.length === 0) {

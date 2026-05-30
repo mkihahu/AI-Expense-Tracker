@@ -87,7 +87,7 @@ const Insights = () => {
         const monthly = latestMonthly?.content_json;
         const tips = latestTips?.content_json;
         const potentialSavings =
-            tips?.tips?.reduce((sum, t) => sum + (Number(t.estimatedSavings) || 0), 0) || 0;
+            tips?.tips?.reduce((sum, t) => sum + (Number(t.estimatedSavings ?? t['estimated savings'] ?? t.estimated_savings) || 0), 0) || 0;
 
         return {
             total: insights.length,

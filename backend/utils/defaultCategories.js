@@ -19,6 +19,7 @@ export const defaultCategories = [
     {name: 'Subscriptions', type: 'expense', icon: 'tv', color: '#DC2626'},
     {name: 'Bills', type: 'expense', icon: 'receipt', color: '#A855F7'},
     {name: 'Personal Care', type: 'expense', icon: 'nail-polish', color: '#F472B6'},
+    {name: 'Travel', type: 'expense', icon: 'plane', color: '#3B82F6'},
     {name: 'Other Expenses', type: 'expense', icon: 'money-bill-wave', color: '#F59E0B'},
 ];
 

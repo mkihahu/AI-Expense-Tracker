@@ -50,6 +50,7 @@ const signToken = (userId) =>
                 await client.query(`
                     INSERT INTO categories (user_id, name, type, icon, color, is_default)
                     VALUES ($1, $2, $3, $4, $5, true)
+                    ON CONFLICT (user_id, name) DO NOTHING
                 `, [user.id, cat.name, cat.type, cat.icon, cat.color]);
             }
 

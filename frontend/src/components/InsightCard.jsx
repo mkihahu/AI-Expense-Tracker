@@ -188,7 +188,7 @@ const MonthlySummaryView = ({ c }) => (
 
 const SavingsTipsView = ({ c }) => {
     const totalSavings = (c.tips || []).reduce(
-        (sum, t) => sum + (Number(t.estimatedSavings) || 0),
+        (sum, t) => sum + (Number(t.estimatedSavings ?? t['estimated savings'] ?? t.estimated_savings) || 0),
         0
     );
 
@@ -220,7 +220,7 @@ const SavingsTipsView = ({ c }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {c.tips?.map((t, i) => {
-                    const savings = Number(t.estimatedSavings) || 0;
+                    const savings = Number(t.estimatedSavings ?? t['estimated savings'] ?? t.estimated_savings) || 0;
                     return (
                         <div
                             key={i}
@@ -322,7 +322,7 @@ const headerChip = (insight) => {
         return <span className={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full ${tone}`}>{c.severity}</span>;
     }
     if (insight.insight_type === 'savings_tips') {
-        const total = (c.tips || []).reduce((s, t) => s + (Number(t.estimatedSavings) || 0), 0);
+        const total = (c.tips || []).reduce((s, t) => s + (Number(t.estimatedSavings ?? t['estimated savings'] ?? t.estimated_savings) || 0), 0);
         if (total > 0) {
             return <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">~${total}/mo</span>;
         }

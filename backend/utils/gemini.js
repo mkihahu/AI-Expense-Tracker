@@ -168,7 +168,7 @@ export const generateSavingsTips = async ({
         "category": "Category this targets",
         "title": "Short title",
         "detail": "2-3 sentence actionable suggestion. Reference their spending in this category. Be encouraging but direct.",
-        "estimated savings": number
+        "estimatedSavings": number
         }]
     }
         Provide exactly 4 tips. Each tip should reference an actual category from the data and include a realistic monthly savings amount.
@@ -208,7 +208,7 @@ export const analyzeTransactionList = async ({
       const amt = parseFloat(t.amount).toFixed(2) || 0;
       const cat = t.category_name || "uncategorized";
       const desc = t.description ? ` | ${t.description}` : "";
-      return `- ${date}: ${type} ${currency} ${amt} ${cat} ${desc}`;
+      return `- ${date}: ${t.type} ${currency} ${amt} ${cat} ${desc}`;
     })
     .join("\n");
 
