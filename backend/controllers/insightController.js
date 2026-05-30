@@ -19,10 +19,7 @@ export const getInsights = async (req, res) => {
       [req.userId],
     );
 
-    res.json({
-      success: true,
-      data: result.rows,
-    });
+    res.json(result.rows);
   } catch (error) {
     console.error("Error fetching AI insights:", error);
     res.status(500).json({
@@ -45,7 +42,7 @@ const buildMonthlyInsight = async (userId) => {
         breakdown AS (
             SELECT
                 c.name AS category,
-                SUM(t.amount) as amount
+                SUM(t.amount) AS amount
             FROM transactions t
             JOIN categories c ON c.id = t.category_id
             WHERE t.user_id = $1
@@ -57,9 +54,9 @@ const buildMonthlyInsight = async (userId) => {
         ),
         trend AS (
             SELECT
-                to_char(date_trunc('month', transaction_date), 'YYYY-MM') as month,
-                SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) as income,
-                SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) as expenses
+                to_char(date_trunc('month', transaction_date), 'YYYY-MM') AS month,
+                SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) AS income,
+                SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS expenses
             FROM transactions
             WHERE user_id = $1
                 AND transaction_date >= date_trunc('month', CURRENT_DATE) - INTERVAL '3 months'
@@ -109,8 +106,8 @@ const buildSavingTips = async (userId) => {
   const top = await pool.query(
     `SELECT 
             c.name AS category,
-            SUM(t.amount) as amount
-            COUNT(t.id) as count
+            SUM(t.amount) AS amount,
+            COUNT(t.id) AS count
             FROM transactions t
             JOIN categories c ON c.id = t.category_id
             WHERE t.user_id = $1
@@ -122,7 +119,7 @@ const buildSavingTips = async (userId) => {
     [userId],
   );
   const incomeResult = await pool.query(
-    `SELECT COALESCE(SUM(amount), 0) as income
+    `SELECT COALESCE(SUM(amount), 0) AS income
         FROM transactions
         WHERE user_id = $1
             AND type = 'income'

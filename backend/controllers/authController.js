@@ -98,8 +98,6 @@ const signToken = (userId) =>
         } catch (error) {
             console.error('Login error:',error);
             res.status(500).json({message: 'Internal Server Error'});
-        } finally {
-            client.release();
         }
     }
 

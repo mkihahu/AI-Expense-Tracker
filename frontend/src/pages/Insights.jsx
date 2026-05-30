@@ -56,7 +56,7 @@ const Insights = () => {
         try {
             setLoading(true);
             const res = await api.get(API_PATHS.INSIGHTS.LIST);
-            setInsights(res.data);
+            setInsights(Array.isArray(res.data) ? res.data : []);
         } catch (err) {
             toast.error('Failed to load insights');
         } finally {
